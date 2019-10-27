@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,12 @@
     <link rel="stylesheet" href="css/style.css" >
 </head>
 <body>
+        <div class="container-btn-periodo bg-dark" style="width: 100%; line-height: 50px;" >
+                <button type="button" class="btn btn-info btn-sm"  onclick="nuevoPeriodo()">Cierre Periodo</button>
+            </div>
+
     <div class="container">
+
         <div class="row">
             <div class="col-12">
                 <div class="container-title" >
@@ -63,7 +68,7 @@
                             <label for="pwd">Precio:</label>
                             <input type="number" class="form-control" id="precio">
                         </div>
-                        <button type="button" id="guardar-gasto" class="btn btn-primary">Guardar</button>
+                        <button type="button" id="guardar-gasto" onclick="guardar()" class="btn btn-primary">Guardar</button>
             </div>
       
             <!-- Modal footer -->
