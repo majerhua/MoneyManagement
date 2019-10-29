@@ -23,6 +23,8 @@ function guardar(){
         fecha : String(moment(new Date()).format("DD/MM/YYYY")),
         hora: String(moment(new Date()).format("HH:mm")),
         periodoId: periodoId
+    }).then(function(res){
+        $("#myModal").modal('toggle');
     });
 }
 
@@ -43,16 +45,20 @@ function listarMovimientos(){
             
             database.ref('Movimientos').on('value',function(snap){
                 let html='';
+                let total=0;
                     $.each(snap.val(),function(index,value){
                         if(value.periodoId==periodoId){
                             html+= `<tr>`;
                             html+= `<td>${value.descripcion}</td>`;
                             html+= `<td>S/.${value.precio}</td>`;
                             html+= `<td>${value.fecha}</td>`;
-                            html+= `<td><button  type='button' class='btn btn-danger btn-sm' onclick='eliminar("${index}")' >Eliminar</button></td>`;
+                            html+= `<td><button  type='button' class='btn btn-danger btn-sm' onclick='eliminar("${index}")' ><i class="far fa-trash-alt"></i></button></td>`;
                             html+= `</tr>`;
+                            total+= parseFloat(value.precio);
+                            
                         }
-                    })
+                    });
+                $("#total").text("S/."+total);
                 tableBody.innerHTML = html;
             });
         }

@@ -7,6 +7,7 @@
     <title>Money Management</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css" >
 </head>
 <body>
@@ -31,7 +32,7 @@
                             Nuevo
                     </button>
                 </div>
-                <div class="table-responsive" style="height: 70vh;overflow-y:scroll;" >
+                <div class="table-responsive" style="height: 60vh;overflow-y:scroll;" >
                     <table class="table table-sm" id="table-movimientos">
                         <thead>
                             <th>Descripción</th>
@@ -42,6 +43,9 @@
                         <tbody id="table-responsive-body" class="buscar">
                         </tbody>
                     </table>
+                </div>
+                <div>
+                    <p><b>Total:</b> <span id="total"></span></p>
                 </div>
             </div>
         </div>
