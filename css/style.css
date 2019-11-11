@@ -9,3 +9,14 @@
     .filtrar{
         margin-left: 5px;
     }
+
+
+
+@media only screen and (max-width: 400px) {
+    #table-movimientos{
+        font-size: 0.8em;
+    }
+    .modal-title{
+        font-size: 1em;
+    }
+  }
