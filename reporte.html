@@ -20,7 +20,7 @@
             </a>
             <div class="d-flex justify-content-between">
                 <div>
-                    <img class="navbar-logo"  src="img/logo_finance_2.png"/> &nbsp;&nbsp;&nbsp;<span style="color:black;">SISTEMA PARA ADMINISTRAR TUS FINANZAS</span>
+                    <img class="navbar-logo"  src="img/logo_finance_2.png"/> &nbsp;&nbsp;&nbsp;<span style="color:black;">SISTEMA WEB ADMINISTRANDO TUS FINANZAS</span>
                 </div>
                 <div style="padding-right:45px;">
                     <img  width="45" height="45" src="img/user_1.png"/>&nbsp;&nbsp;
@@ -29,34 +29,38 @@
             </div>
         </div>
         <div class="sidebar">
-            <ul>
-                <li><a id="vista-1" href="panel.html"><i class="fa fa-home"></i><span>Inicio</span></a></li>
-                <li><a  id="vista-3" href="categorias.html"><i class="fa fa-file-import"></i><span>Categorias</span></a></li>
-                <li><a  id="vista-4" href="gastos.html"><i class="fas fa-exchange-alt"></i><span>Gastos</span></a></li>
-                <li><a  id="vista-5" href="ingresos.html"><i class="fas fa-backspace"></i><span>Ingresos</span></a></li>
-                <li><a  id="vista-6" href="reporte.html"><i class="fas fa-concierge-bell"></i><span>Reporte</span></a></li>
-                <li onclick="salir()" ><a  id="vista-6" href="#"><i class="fas fa-concierge-bell"></i><span>Salir</span></a></li>
-            </ul>
+          <ul>
+              <li><a id="vista-1" href="panel.html"><i class="fa fa-home"></i><span>Inicio</span></a></li>
+              <li><a  id="vista-3" href="categorias.html"><i class="fas fa-clipboard-list"></i><span>Categorias</span></a></li>
+              <li><a  id="vista-4" href="gastos.html"><i class="fas fa-hand-holding-usd"></i><span>Gastos</span></a></li>
+              <li><a  id="vista-5" href="ingresos.html"><i class="fas fa-money-check-alt"></i><span>Ingresos</span></a></li>
+              <li><a  id="vista-6" href="reporte.html"><i class="fas fa-chart-line"></i><span>Reporte</span></a></li>
+              <li><a  id="vista-7" href="periodo.html"><i class="fas fa-circle-notch"></i><span>Periodo</span></a></li>
+              <li onclick="salir()" ><a  id="vista-6" href="#"><i class="fas fa-sign-out-alt"></i><span>Salir</span></a></li>
+          </ul>
         </div>
           
-          <!-- Content -->
-          <div class="main">
-            <div class="hipsum">
-              <div class="jumbotron">
-                <h1 class="text-center">REPORTE INGRESOS VS GASTOS</h1>
-                <div class="row">
-                  
-                  <div class="container">
-                      <div class="row">
-                          <div class="col-12" >
-                            <canvas id="myChart"></canvas>
-                          </div>
-                      </div>
-                  </div>
+        <!-- Content -->
+        <div class="main">
+          <div class="hipsum">
+            <div class="jumbotron">
+              <h1 class="text-center">REPORTE INGRESOS VS GASTOS</h1>
+              <div class="row">
+                
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                          <canvas id="myChart"></canvas>
+                        </div>
+                        <div class="col-12">
+                          <canvas id="myChart-2"></canvas>
+                        </div>
+                    </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
     </div>
 
   <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>

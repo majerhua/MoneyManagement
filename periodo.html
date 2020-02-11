@@ -20,7 +20,7 @@
             </a>
             <div class="d-flex justify-content-between">
                 <div>
-                    <img class="navbar-logo"  src="img/logo_finance_2.png""/> &nbsp;&nbsp;&nbsp;<span style="color:black;">SISTEMA WEB ADMINISTRANDO TUS FINANZAS</span>
+                    <img class="navbar-logo"  src="img/logo_finance_2.png"/> &nbsp;&nbsp;&nbsp;<span style="color:black;">SISTEMA WEB ADMINISTRANDO TUS FINANZAS</span>
                 </div>
                 <div style="padding-right:45px;">
                     <img  width="45" height="45" src="img/user_1.png"/>&nbsp;&nbsp;
@@ -44,32 +44,29 @@
           <div class="main">
             <div class="hipsum">
               <div class="jumbotron">
-                <h1 class="text-center">REGISTRA TUS INGRESOS</h1>
+                <h1 class="text-center">LISTA DE PERIODOS CREADOS</h1>
                 <div class="row">
+                  
                   <div class="container">
                       <div class="row">
                           <div class="col-12" >
-                              <div class="container-filtrar d-flex justify-content-between" >
-                                  <input class="filtrar form-control form-control-sm" type="text" ident-buscar="{{cont}}"  placeholder=" ingresa los campos a buscar ">&nbsp;&nbsp;&nbsp;
-                                  <button type="button" class="btn btn-primary btn-sm" onclick="openModalNewGasto()">
-                                        <i class="fas fa-plus-square"></i>
-                                  </button>
+                          
+                              <div class="container-filtrar d-flex">
+                                  <button type="button" style="width: 150px;" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-cierre-caja">Cierre Periodo</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                  <input class="filtrar form-control form-control-sm" type="text" placeholder=" ingresa los campos a buscar ">&nbsp;&nbsp;&nbsp;&nbsp;
                               </div>
                               <div class="table-responsive" style="height: 60vh;overflow-y:scroll;" >
                                   <table class="table table-sm" id="table-movimientos">
                                       <thead>
-                                          <th>Tipo</th>
-                                          <th>Monto</th>
+                                          <th>Descripción</th>
                                           <th>Fecha</th>
-                                          <th></th>
+                                          <th>Vigente</th>
                                       </thead>
                                       <tbody id="table-responsive-body" class="buscar">
                                       </tbody>
                                   </table>
                               </div>
-                              <div>
-                                <p><b>Total:</b> <span id="total"></span></p>
-                              </div>
+
                           </div>
                       </div>
                   </div>
@@ -79,59 +76,30 @@
           </div>
     </div>
 
-
-<!-- The Modal -->
-<div class="modal fade" id="modal-guardar">
-        <div class="modal-dialog">
-          <div class="modal-content">
-      
-            <!-- Modal Header -->
-            <div class="modal-header">
-              <h4 class="modal-title">Registrar Categoria</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-      
-            <!-- Modal body -->
-            <div class="modal-body">
-                <div class="form-group">
-                  <label for="descripcion">Monto</label>
-                  <input type="text" class="form-control" id="monto">
-                </div>
-                <div class="form-group">
-                  <label for="descripcion">Tipos</label>
-                  <select class="form-control" id="tipo">
-                    <option value="">--Seleccionar--</option>
-                  </select>
-                </div>
-                <button type="button" id="guardar-gasto" onclick="guardar()" class="btn btn-primary">Guardar</button>
-            </div>
-      
-            <!-- Modal footer -->
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-      
-          </div>
-        </div>
-      </div>
-
   <!-- The Modal -->
-  <div class="modal fade" id="modal-eliminar">
+  <div class="modal fade" id="modal-cierre-caja">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
       
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Desea Eliminar El Registro?</h4>
+          <h4 class="modal-title">Cierre de Periodo</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         
         <!-- Modal body -->
         <div class="modal-body">
+            <p class="text-warning"><b>Si usted hace click en aceptar se creara un nuevo periodo y los registros actuales se perderan, ¿Está seguro de cerrar periodo?</b></p>
+            <div class="row d-flex justify-content-center" >
+               <div class="form-group" >
+                <textarea class="form-control" id="descripcion" placeholder="Ingrese descripción del nuevo periodo"></textarea>
+              </div> 
+            </div>
+
           <div class="d-flex justify-content-around">
               <input type="hidden" id="m-elim-id">
             <div>
-                <button class="btn btn-danger" onclick="eliminar()">Aceptar</button>
+                <button class="btn btn-danger" data-dismiss="modal" onclick="nuevoPeriodo()" >Aceptar</button>
             </div>
             <div>
                 <button class="btn btn-primary" data-dismiss="modal">Cancelar</button>
@@ -142,17 +110,16 @@
     </div>
   </div>
 
-      <script src="https://code.jquery.com/jquery-3.4.1.js"
-      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-      crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>    
+  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>    
       <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/node-uuid/1.4.8/uuid.js" ></script>
-    <script src="js/firebase.js"></script>
-    <script src="js/moment.js"></script>
-    <script src="js/ingresos.js"></script>
-    <script src="js/panel.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script src="js/firebase.js"></script>
+  <script src="js/moment.js"></script>
+  <script src="js/periodo.js"></script>
+  <script src="js/panel.js"></script>
 </body>
 </html>

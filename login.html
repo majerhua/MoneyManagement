@@ -4,13 +4,25 @@
 	<title></title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/login.css">
 </head>
 <body>
 
-	<input type="text" id="email" placeholder="email">
-	<input type="password" id="password" placeholder="password">
-	<button type="button" id="ingresar">Ingresar</button>
-	<button  type="button" id="salir">Salir</button>
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="img/logo_finance_2.png" id="icon" alt="User Icon" />
+    </div>
+
+    <!-- Login Form -->
+      <input type="email" id="email" class="fadeIn second" name="login" placeholder="Email">
+      <input type="password" id="password" class="fadeIn third" name="login" placeholder="Password">
+      <button type="button" id="ingresar"  class="fadeIn fourth">Ingresar</button>
+  </div>
+</div>
 
 
   	<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="crossorigin="anonymous"></script>

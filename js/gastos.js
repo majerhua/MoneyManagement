@@ -55,7 +55,7 @@ firebase.auth().onAuthStateChanged(function(user) {
   }
 });
 function guardar(){
-    database.ref('Movimientos/').push({
+    database.ref('Gastos/').push({
         descripcion: $descripcion.val(),
         precio: $precio.val(),
         fecha : String(moment(new Date()).format("DD/MM/YYYY")),
@@ -63,9 +63,10 @@ function guardar(){
         periodoId: periodoId,
         categoria: $("#categoria").val()
     }).then(function(res){
-        $("#myModal").modal('toggle');
+        $("#modal-guardar").modal('toggle');
         $precio.val("");
         $descripcion.val("");
+        $categoria.val("");
     });
 }
 
@@ -77,7 +78,7 @@ function listarCategoria(){
             $.each(snap.val(),function(index,value){
                $categoria.append("<option value='"+value.descripcion+"'>"+value.descripcion+"</option>");
             });
-        });
+    });
 }
 
 
@@ -94,7 +95,7 @@ function listarGastos(){
         console.log("Periodo =>",periodo.id);
         if(periodo.vigente == 1){
             
-            database.ref('Movimientos').on('value',function(snap){
+            database.ref('Gastos').on('value',function(snap){
                 let html='';
                 let total=0;
                     $.each(snap.val(),function(index,value){
@@ -134,7 +135,7 @@ $precio.on('keyup',function(e){
 });
 
 function eliminar(){
-    var refId = database.ref('Movimientos').child($mElimId.val());
+    var refId = database.ref('Gastos').child($mElimId.val());
     refId.remove().then(function(res){
         $("#modal-eliminar").modal('toggle');
     });

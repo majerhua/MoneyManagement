@@ -61,6 +61,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     var providerData = user.providerData;
     // ...
     console.log("USUARIO LOGUEADO");
+    window.location.href="panel.html"
   } else {
     // User is signed out.
     // ...
