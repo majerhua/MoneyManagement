@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css" >
     <link rel="Stylesheet" type="text/css" href="css/panel.css" />
+    <link rel="stylesheet" type="text/css" href="css/alertify.css">
 </head>
 <body>
     <div class="container-btn-periodo bg-dark" style="width: 100%; line-height: 50px;" >
@@ -57,7 +58,7 @@
                           <div class="col-12" >
                               <div class="container-filtrar d-flex justify-content-between" >
                                   <input class="filtrar form-control form-control-sm" type="text" ident-buscar="{{cont}}"  placeholder=" ingresa los campos a buscar ">&nbsp;&nbsp;&nbsp;
-                                  <button type="button" class="btn btn-primary btn-sm" onclick="openModalNewGasto()">
+                                  <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-guardar">
                                         <i class="fas fa-plus-square"></i>
                                   </button>
                               </div>
@@ -68,6 +69,7 @@
                                           <th>Precio</th>
                                           <th>Categoria</th>
                                           <th>Fecha</th>
+                                          <th></th>
                                           <th></th>
                                       </thead>
                                       <tbody id="table-responsive-body" class="buscar">
@@ -89,57 +91,86 @@
     </div>
 
 
-<!-- The Modal -->
-<div class="modal fade" id="modal-guardar">
-        <div class="modal-dialog">
-          <div class="modal-content">
-      
-            <!-- Modal Header -->
-            <div class="modal-header">
-              <h4 class="modal-title">Registrar Gasto</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-      
-            <!-- Modal body -->
-            <div class="modal-body">
-                    <div class="form-group">
-                            <label for="email">Descripcion</label>
-                            <input type="text" class="form-control" id="descripcion">
-                        </div>
-                        <div class="form-group">
-                            <label for="pwd">Precio:</label>
-                            <input type="text" class="form-control" id="precio">
-                        </div>
-                        <div class="form-group">
-                          <label for="pwd">Categoria:</label>
-                          <select class="form-control" id="categoria">
-                            <option value="">--Seleccionar--</option>
-                          </select>
-                        </div>
-                        <button type="button" id="guardar-gasto" onclick="guardar()" class="btn btn-primary">Guardar</button>
-            </div>
-      
-            <!-- Modal footer -->
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-      
-          </div>
-        </div>
-      </div>
+  <div class="modal fade" id="modal-guardar">
+    <div class="modal-dialog">
+      <div class="modal-content">
 
-  <!-- The Modal -->
+        <div class="modal-header">
+          <h4 class="modal-title">Registrar Gasto</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+                <div class="form-group">
+                        <label for="email">Descripcion</label>
+                        <input type="text" class="form-control" id="descripcion">
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Precio:</label>
+                        <input type="text" class="form-control" id="precio">
+                    </div>
+                    <div class="form-group">
+                      <label for="pwd">Categoria:</label>
+                      <select class="form-control" id="categoria">
+                        <option value="">--Seleccionar--</option>
+                      </select>
+                    </div>
+                    <button type="button" id="guardar-gasto" onclick="guardar()" class="btn btn-primary">Guardar</button>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modal-editar">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h4 class="modal-title">Editar Gasto</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+          <div class="form-group">
+            <input type="hidden" id="m-edit-id">
+            <label for="email">Descripcion</label>
+            <input type="text" class="form-control" id="edi-descripcion">
+          </div>
+          <div class="form-group">
+              <label for="pwd">Precio:</label>
+              <input type="text" class="form-control" id="edi-precio">
+          </div>
+          <div class="form-group">
+            <label for="pwd">Categoria:</label>
+            <select class="form-control" id="edi-categoria">
+              <option value="">--Seleccionar--</option>
+            </select>
+          </div>
+          <button type="button" id="editar-gasto" onclick="editar()" class="btn btn-primary">Editar</button>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <div class="modal fade" id="modal-eliminar">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
       
-        <!-- Modal Header -->
         <div class="modal-header">
           <h4 class="modal-title">Desea Eliminar El Registro?</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         
-        <!-- Modal body -->
         <div class="modal-body">
           <div class="d-flex justify-content-around">
               <input type="hidden" id="m-elim-id">
@@ -155,45 +186,18 @@
     </div>
   </div>
 
-  <!-- The Modal -->
-  <div class="modal fade" id="modal-cierre-caja">
-        <div class="modal-dialog modal-sm">
-          <div class="modal-content">
-          
-            <!-- Modal Header -->
-            <div class="modal-header">
-              <h4 class="modal-title">Cierre de Caja</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            
-            <!-- Modal body -->
-            <div class="modal-body">
-                <p class="text-warning"><b>Si usted hace click en aceptar se creara un nuevo periodo y los registros actuales se perderan, ¿está seguro de cerrar caja?</b></p>
-              <div class="d-flex justify-content-around">
-                  <input type="hidden" id="m-elim-id">
-                <div>
-                    <button class="btn btn-danger" data-dismiss="modal" onclick="nuevoPeriodo()" >Aceptar</button>
-                </div>
-                <div>
-                    <button class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <script src="https://code.jquery.com/jquery-3.4.1.js"
-      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-      crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>    
-      <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="https://code.jquery.com/jquery-3.4.1.js"
+    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>    
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/node-uuid/1.4.8/uuid.js" ></script>
-    <script src="js/firebase.js"></script>
-    <script src="js/moment.js"></script>
-    <script src="js/gastos.js"></script>
-    <script src="js/panel.js"></script>
+  <script src="js/firebase.js"></script>
+  <script src="js/moment.js"></script>
+  <script src="js/gastos.js"></script>
+  <script src="js/panel.js"></script>
+  <script src="js/alertify.js"></script>
 </body>
 </html>

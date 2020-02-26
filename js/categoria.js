@@ -2,9 +2,11 @@ var database = firebase.database();
 let periodoId = '';
 let tableBody = document.querySelector("#table-responsive-body");
 let $btnGuardarGasto = $("#guardar-gasto");
-let $precio = $("#precio");
+let $btnEditarCategoria = $("#editar-categoria");
 let $descripcion = $("#descripcion");
+let $ediDescripcion = $("#edi-descripcion");
 let $mElimId = $("#m-elim-id");
+let $mEditId = $("#m-edit-id");
 let keyPeriodo;
 
 $(document).ready(function(){
@@ -55,12 +57,11 @@ function guardar(){
     database.ref('Categorias/').push({
         descripcion: $descripcion.val(),
     }).then(function(res){
-        $("#myModal").modal('toggle');
+        $("#modal-guardar").modal('toggle');
         $descripcion.val("");
+        alertify.success('Se guardo correctamente.');
     });
 }
-
-
 
 
 function listarCategorias(){
@@ -70,40 +71,43 @@ function listarCategorias(){
             $.each(snap.val(),function(index,value){
                 html+= `<tr>`;
                 html+= `<td>${value.descripcion}</td>`;
-                html+= `<td><button  type='button' onclick='setIdReq("${index}")' class='btn btn-danger btn-sm' data-toggle="modal" data-target="#modal-eliminar" ><i class="far fa-trash-alt"></i></button></td>`;
+                html+= `<td><button  type='button' onclick='setIdReq("${index}","editar")' class='btn btn-success btn-sm' data-toggle="modal" data-target="#modal-editar" ><i class="far fa-edit"></i></button></td>`;
+                html+= `<td><button  type='button' onclick='setIdReq("${index}","eliminar")' class='btn btn-danger btn-sm' data-toggle="modal" data-target="#modal-eliminar" ><i class="far fa-trash-alt"></i></button></td>`;
                 html+= `</tr>`;                        
             });
         tableBody.innerHTML = html;
     });
 }
 
-
 function eliminar(){
     var refId = database.ref('Categorias').child($mElimId.val());
     refId.remove().then(function(res){
         $("#modal-eliminar").modal('toggle');
+        alertify.success('Se elimino correctamente.');
     });
 }
 
-function setIdReq(id){
-    $mElimId.val(id);
-}
-
-function nuevoPeriodo(){
-
-    var refPeriodoId = database.ref('Periodo').child(keyPeriodo)
-    refPeriodoId.update({
-        vigente: 0
-    }).then(function(res){
-        console.log("Nuevo Periodo");
-        database.ref('Periodo/').push({
-            id: uuid.v1(),
-            fecha : String(moment(new Date()).format("DD/MM/YYYY")),
-            vigente: 1
-        })
+function editar(){
+    database.ref('Categorias/'+$mEditId.val()).update({
+        descripcion: $ediDescripcion.val()
+    },function(err){
+        if(err){
+            alertify.error('Ocurrio un error.');
+        }else{
+            alertify.success('Se edito correctamente.');
+            $("#modal-editar").modal('toggle');
+        }
     });
 }
 
-function openModalNewGasto(){
-    $("#modal-guardar").modal('toggle');
+function setIdReq(id,type){
+
+    if(type=="eliminar")
+        $mElimId.val(id);
+    else if(type == "editar"){
+        $mEditId.val(id);
+        database.ref('Categorias/'+id).on('value',function(snap){
+            $ediDescripcion.val(snap.val().descripcion);
+        });
+    }
 }

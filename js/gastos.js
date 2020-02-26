@@ -7,7 +7,12 @@ let $descripcion = $("#descripcion");
 let $categoria = $("#categoria");
 let $total = $("#total");
 let $mElimId = $("#m-elim-id");
+let $mEditId = $("#m-edit-id");
 let keyPeriodo;
+
+let $ediDescripcion = $("#edi-descripcion");
+let $ediPrecio = $("#edi-precio");
+let $ediCategoria = $("#edi-categoria");
 
 
 $(document).ready(function(){
@@ -54,6 +59,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     
   }
 });
+
 function guardar(){
     database.ref('Gastos/').push({
         descripcion: $descripcion.val(),
@@ -64,6 +70,7 @@ function guardar(){
         categoria: $("#categoria").val()
     }).then(function(res){
         $("#modal-guardar").modal('toggle');
+        alertify.success('Se elimino correctamente.');
         $precio.val("");
         $descripcion.val("");
         $categoria.val("");
@@ -73,39 +80,41 @@ function guardar(){
 function listarCategoria(){
     database.ref('Categorias').
         on('value',function(snap){
+            $ediCategoria.empty();
+            $ediCategoria.append("<option value=''>--Seleccionar--</option>");
             $categoria.empty();
             $categoria.append("<option value=''>--Seleccionar--</option>");
             $.each(snap.val(),function(index,value){
                $categoria.append("<option value='"+value.descripcion+"'>"+value.descripcion+"</option>");
+               $ediCategoria.append("<option value='"+value.descripcion+"'>"+value.descripcion+"</option>");
             });
     });
 }
-
-
 
 function listarGastos(){
     database.ref('Periodo/')
     .orderByChild('vigente')
     .equalTo(1)
     .on('child_added',function(snapshot){
-        console.log("SnapShot =>",snapshot);
         keyPeriodo = snapshot.key;
         var periodo = snapshot.val();
         periodoId = periodo.id;
-        console.log("Periodo =>",periodo.id);
+
         if(periodo.vigente == 1){
             
             database.ref('Gastos').on('value',function(snap){
                 let html='';
                 let total=0;
                     $.each(snap.val(),function(index,value){
+
                         if(value.periodoId==periodoId){
                             html+= `<tr>`;
                             html+= `<td>${value.descripcion}</td>`;
                             html+= `<td>S/.${value.precio}</td>`;
                             html+= `<td>${value.categoria}</td>`;
                             html+= `<td>${value.fecha}</td>`;
-                            html+= `<td><button  type='button' onclick='setIdReq("${index}")' class='btn btn-danger btn-sm' data-toggle="modal" data-target="#modal-eliminar" ><i class="far fa-trash-alt"></i></button></td>`;
+                            html+= `<td><button  type='button' onclick='setIdReq("${index}","editar")' class='btn btn-success btn-sm' data-toggle="modal" data-target="#modal-editar" ><i class="far fa-edit"></i></button></td>`;
+                            html+= `<td><button  type='button' onclick='setIdReq("${index}","eliminar")' class='btn btn-danger btn-sm' data-toggle="modal" data-target="#modal-eliminar" ><i class="far fa-trash-alt"></i></button></td>`;
                             html+= `</tr>`;
                             total+= parseFloat(value.precio);                         
                         }
@@ -126,9 +135,6 @@ $precio.on('keyup',function(e){
         //$precio.val(val.substring(0,val.length-1));
     console.log(re.test(val));
     if( ( val.charCodeAt(val.length-1) >=48 && val.charCodeAt(val.length-1)<=57) || val.charCodeAt(val.length-1)==46){
-
-
-
     }else{
         $precio.val(val.substring(0,val.length-1));
     }
@@ -138,28 +144,37 @@ function eliminar(){
     var refId = database.ref('Gastos').child($mElimId.val());
     refId.remove().then(function(res){
         $("#modal-eliminar").modal('toggle');
+        alertify.success('Se elimino correctamente.');
     });
 }
 
-function setIdReq(id){
-    $mElimId.val(id);
-}
-
-function nuevoPeriodo(){
-
-    var refPeriodoId = database.ref('Periodo').child(keyPeriodo)
-    refPeriodoId.update({
-        vigente: 0
-    }).then(function(res){
-        console.log("Nuevo Periodo");
-        database.ref('Periodo/').push({
-            id: uuid.v1(),
-            fecha : String(moment(new Date()).format("DD/MM/YYYY")),
-            vigente: 1
-        })
+function editar(){
+ 
+    database.ref('Gastos/'+$mEditId.val()).update({
+        descripcion:$ediDescripcion.val(),
+        precio:$ediPrecio.val(),
+        categoria:$ediCategoria.val()
+    },function(err){
+        if(err){
+            alertify.error('Ocurrio un error.');
+        }else{
+            alertify.success('Se edito correctamente.');
+            $("#modal-editar").modal('toggle');
+        }
     });
 }
 
-function openModalNewGasto(){
-    $("#modal-guardar").modal('toggle');
+function setIdReq(id,type){
+    
+    if(type=="eliminar")
+        $mElimId.val(id);
+    else if(type == "editar"){
+        $mEditId.val(id);
+        database.ref('Gastos/'+id).on('value',function(snap){
+
+            $ediDescripcion.val(snap.val().descripcion);
+            $ediPrecio.val(snap.val().precio);
+            $ediCategoria.val(snap.val().categoria);
+        });
+    }
 }
