@@ -39,6 +39,9 @@ h2 {
   width: 100%;
   min-height: 100%;
   padding: 20px;
+  background-image: url('../img/fondo_login.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 #formContent {
