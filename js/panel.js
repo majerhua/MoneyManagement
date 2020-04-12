@@ -1,4 +1,6 @@
 
+
+
 $(document).ready(function () {
 
     $('#menu-action').click(function() {
@@ -20,3 +22,15 @@ $(document).ready(function () {
           $('.sidebar').toggleClass('hovered');
       });
 });
+
+
+function salir(){
+    firebase.auth().signOut().then(function() {
+        // Sign-out successful.
+        window.location.href="login.html";
+    }).catch(function(error) {
+        // An error happened.
+    });
+}
+
+
